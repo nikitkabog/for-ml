@@ -1,0 +1,43 @@
+import copy
+import random
+import time
+
+n = 5
+a = [['.' for i in range(n)] for j in range(n)]
+m = int(input())
+for i in range(m):
+    f = ['A', 'B', 'c']
+    x = [int(k) for k in input().split()]
+    a[x[0] - 1][x[1] - 1] = f[random.randint(0, 2)]
+b = copy.copy(a)
+while True:
+    for i in range(n):
+        for j in range(n):
+            print(a[i][j], end='')
+        print()
+    for i in range(n):
+        for j in range(n):
+            sa = 0
+            sb = 0
+            for k in [-1, 0, 1]:
+                for l in [-1, 0, 1]:
+                    if (0 <= i + k < n and 0 <= l + j < n and a[i + k][l + j] == 'A'):
+                        sa += 1
+            for k in [-1, 0, 1]:
+                for l in [-1, 0, 1]:
+                    if (0 <= i + k < n and 0 <= l + j < n and a[i + k][l + j] == 'B'):
+                        sb += 1
+            if (a[i][j] == 'c'):
+                continue
+            if (a[i][j] == '.'):
+                if (sa == 3):
+                    b[i][j] = 'A'
+                if (sb == 3):
+                    b[i][j] = 'B'
+            elif (sa < 2  or sa > 4 and a[i][j] == 'A'):
+                b[i][j] = '.'
+            elif (sb < 2  or sb > 4 and a[i][j] == 'B'):
+                b[i][j] = '.'
+    time.sleep(2)
+    print('\n' * 100)
+    a = copy.copy(b)
